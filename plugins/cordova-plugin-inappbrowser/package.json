@@ -1,0 +1,124 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "cordova-plugin-inappbrowser@~1.3.0",
+        "scope": null,
+        "escapedName": "cordova-plugin-inappbrowser",
+        "name": "cordova-plugin-inappbrowser",
+        "rawSpec": "~1.3.0",
+        "spec": ">=1.3.0 <1.4.0",
+        "type": "range"
+      },
+      "/home/ubuntu/workspace/myApp/node_modules"
+    ]
+  ],
+  "_from": "cordova-plugin-inappbrowser@>=1.3.0 <1.4.0",
+  "_id": "cordova-plugin-inappbrowser@1.3.0",
+  "_inCache": true,
+  "_location": "/cordova-plugin-inappbrowser",
+  "_nodeVersion": "5.4.1",
+  "_npmOperationalInternal": {
+    "host": "packages-9-west.internal.npmjs.com",
+    "tmp": "tmp/cordova-plugin-inappbrowser-1.3.0.tgz_1455219429101_0.1565871904604137"
+  },
+  "_npmUser": {
+    "name": "stevegill",
+    "email": "stevengill97@gmail.com"
+  },
+  "_npmVersion": "3.5.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "cordova-plugin-inappbrowser@~1.3.0",
+    "scope": null,
+    "escapedName": "cordova-plugin-inappbrowser",
+    "name": "cordova-plugin-inappbrowser",
+    "rawSpec": "~1.3.0",
+    "spec": ">=1.3.0 <1.4.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-inappbrowser/-/cordova-plugin-inappbrowser-1.3.0.tgz",
+  "_shasum": "16f0085300bc9871733cb1f9a9778d2f14fb6187",
+  "_shrinkwrap": null,
+  "_spec": "cordova-plugin-inappbrowser@~1.3.0",
+  "_where": "/home/ubuntu/workspace/myApp/node_modules",
+  "author": {
+    "name": "Apache Software Foundation"
+  },
+  "bugs": {
+    "url": "https://github.com/apache/cordova-plugin-inappbrowser/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-inappbrowser",
+    "platforms": [
+      "android",
+      "amazon-fireos",
+      "ubuntu",
+      "ios",
+      "wp7",
+      "wp8",
+      "windows8",
+      "windows",
+      "firefoxos"
+    ]
+  },
+  "dependencies": {},
+  "description": "Cordova InAppBrowser Plugin",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "16f0085300bc9871733cb1f9a9778d2f14fb6187",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-inappbrowser/-/cordova-plugin-inappbrowser-1.3.0.tgz"
+  },
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.1.0"
+    }
+  ],
+  "homepage": "https://github.com/apache/cordova-plugin-inappbrowser#readme",
+  "keywords": [
+    "cordova",
+    "in",
+    "app",
+    "browser",
+    "inappbrowser",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-amazon-fireos",
+    "cordova-ubuntu",
+    "cordova-ios",
+    "cordova-wp7",
+    "cordova-wp8",
+    "cordova-windows8",
+    "cordova-windows",
+    "cordova-firefoxos"
+  ],
+  "license": "Apache-2.0",
+  "maintainers": [
+    {
+      "name": "sgrebnov",
+      "email": "sergei.grebnov@gmail.com"
+    },
+    {
+      "name": "shazron",
+      "email": "shazron@gmail.com"
+    },
+    {
+      "name": "stevegill",
+      "email": "stevengill97@gmail.com"
+    }
+  ],
+  "name": "cordova-plugin-inappbrowser",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apache/cordova-plugin-inappbrowser.git"
+  },
+  "scripts": {},
+  "version": "1.3.0"
+}
