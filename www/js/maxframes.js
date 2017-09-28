@@ -32,8 +32,9 @@ var myApp = new Framework7({
     preloadPreviousPage: false,
 	precompileTemplates: true,
     template7Pages: true,
+    debug: true,
 	/* If the page need dynamic data, for example, from a php server using ajax */ 
-	preprocess: function (content, url, next) {	
+	/*preprocess: function (content, url, next) {
 		var main_url = url.split('?')[0];
 		
 		switch(main_url){
@@ -44,7 +45,7 @@ var myApp = new Framework7({
 		}
 	},
 	preroute: function (view, options) {
-	}
+	}*/
 });
 
 // Expose Internal DOM library
@@ -151,11 +152,10 @@ function doLogin(name, email, token, remember, page){
 			sessionStorage.token = token;
 		}
 		
-		console.log("Welcome " + name);
+		//console.log("Welcome " + name);
 	} else {
-		console.log('Sorry! No Web Storage support..');
+		//console.log('Sorry! No Web Storage support..');
 	}
-	
 	mainView.router.loadPage(page)
 }
 
@@ -170,9 +170,7 @@ function doLogout(){
 			sessionStorage.removeItem("name");
 			sessionStorage.removeItem("email");
 			sessionStorage.removeItem("token");
-		}				
-		$$('.signin').show();
-		$$('.loggedin').hide();
+		}
 	}
 	appSettings.auth = 0;
 	myApp.closePanel();
@@ -188,8 +186,6 @@ function init(){
 function Auth(){
 	if (typeof(Storage) !== "undefined") {
 		if(localStorage.token || sessionStorage.token){
-			$$('.signin').hide();
-			$$('.loggedin').show();
 			
 			if(localStorage.token){
 				var auth = {
@@ -229,18 +225,17 @@ $$(document).on('page:init', function (e) {
 	var page = e.detail.page;
 	
 	switch(page.name){
-		case 'home_page': init();	
-			break;
+		case 'login_screen':	init();
 			
-		case 'login_screen':	toggleShowPassword('#logpass', '#showpass', '.label-checkbox');
+								toggleShowPassword('#logpass', '#showpass', '.label-checkbox');
 		
 								$$('#loginForm').on('submit', function(){	//-----LOGIN FORM
 									$$.ajax({
 										cache: false,
 										crossDomain: true,
-										url: appSettings.domain + '/oauth/token',
+										url: $$(this).attr('action'),
 										type: 'POST',
-										data: $('#loginForm').serialize(),
+										data: $(this).serialize(),
 										datatype: 'json',
 										success: function(data) {
 												data = JSON.parse(data);
@@ -249,8 +244,45 @@ $$(document).on('page:init', function (e) {
 												doLogin(data.name, data.email, data.access_token, remember, pagenav);
 										},
 										error: function(xhr){
-											console.log(xhr.reponseText);
+											//console.log(xhr.reponseText);
 											myApp.alert("Login credentials do not match our records. Please try again.");
+										}
+									});
+								});
+			break;
+		case 'home_page':	$$('#referPatientSubmit').on('click', function(e){
+									e.preventDefault();
+									$.ajax({
+										cache: false,
+										crossDomain: true,
+										url: appSettings.domain + "/api/referpatient",
+										type: 'POST',
+										data: $('#referPatientForm').serialize(),
+										datatype: 'json',
+										headers: { 'Accept': 'application/json', 'Authorization': "Bearer " + Auth().token},
+										/*beforeSend: function(request) {
+											return request.setRequestHeader("Authorization", "Bearer " + Auth().token);
+										},*/
+										success: function(data) {
+											//data = JSON.parse(data);
+											myApp.alert("Patient referred successfully.");
+												
+										},
+										error: function(xhr){
+											if( xhr.status === 422 ) {
+										        //process validation errors here.
+										        var errors = xhr.responseJSON; //this will get the errors response data.
+										        //show them somewhere in the markup
+										        //e.g
+										        var errorsHtml = '<div class="alert alert-danger"><ul>';
+										
+										        $.each( errors, function( key, value ) {
+										            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+										        });
+										        errorsHtml += '</ul></di>';
+										            
+										        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
+										    }
 										}
 									});
 								});
@@ -259,4 +291,4 @@ $$(document).on('page:init', function (e) {
 			break;
 		}
 	
-})
+});

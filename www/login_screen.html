@@ -1,17 +1,22 @@
 <div data-page="login_screen" class="page">
-  <div class="navbar ">
+  <!--<div class="navbar ">
     <div class="navbar-inner">
 		<div class="center">Mvddoc</div>
     </div>
-  </div>
-  <div class="toolbar tabbar">
-    <div class="toolbar-inner"> <a href="#tab1" class="button active tab-link">Sign in</a> </div>
-  </div>
+  </div>-->
   <div class="page-content logins hide-bars-on-scroll"> 
-    <div class="tabs-animated-wrap">
-      <div class="tabs" >
-        <div id="tab1" class="tab active">
-          <form id="loginForm" action="{{@global.domain}}/oauth/token" method="POST" class="ajax-submit">
+    <div class="content-block">
+        <!--<div class="row center">
+          <div class="col-auto">
+            <img src="img/pagopa.png" />
+          </div>
+        </div>-->
+        <div class="row center">
+          <div class="col-100 tablet-33">
+            <p>LOGIN</p>
+          </div>
+        </div>
+        <form id="loginForm" action="{{@global.domain}}/oauth/token" method="POST" class="ajax-submit">
             <div class="list-block">
               <ul>
                 <li class="item-content">
@@ -47,11 +52,9 @@
 <input type="hidden" name="client_secret" value="y2uX6hDKIBayf3yX0SK72XPbr6LCFgMQI2CaeuzD">
 <input type="hidden" name="scope" value="">
             <div class="content-block button-connect ">
-				<input type="submit" name="action" value="Login" class="button button-fill"> <br/>
+				<input type="submit" name="action" value="Login" class="button button-fill button-raised"> <br/>
             </div>
 </form>
-        </div>
-      </div>
     </div>
   </div>
 </div>
