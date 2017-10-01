@@ -245,13 +245,29 @@ $$(document).on('page:init', function (e) {
 										},
 										error: function(xhr){
 											//console.log(xhr.reponseText);
-											myApp.alert("Login credentials do not match our records. Please try again.");
+											if( xhr.status === 422 ) {
+										        //process validation errors here.
+										        var errors = xhr.responseJSON; //this will get the errors response data.
+										        //show them somewhere in the markup
+										        //e.g
+										        var errorsHtml = '<div class="alert alert-danger"><ul>';
+										
+										        $.each( errors, function( key, value ) {
+										            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+										        });
+										        errorsHtml += '</ul></di>';
+										            
+										        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
+										    } else {
+										    	myApp.alert("Login credentials dont match our records. Please try again.");
+										    }
 										}
 									});
 								});
 			break;
 		case 'home_page':	$$('#referPatientSubmit').on('click', function(e){
 									e.preventDefault();
+									myApp.showPreloader();
 									$.ajax({
 										cache: false,
 										crossDomain: true,
@@ -263,9 +279,13 @@ $$(document).on('page:init', function (e) {
 										/*beforeSend: function(request) {
 											return request.setRequestHeader("Authorization", "Bearer " + Auth().token);
 										},*/
+										complete: function() {
+											myApp.hidePreloader();
+										},
 										success: function(data) {
 											//data = JSON.parse(data);
 											myApp.alert("Patient referred successfully.");
+											$('#referPatientForm').find("input[type=text], select").val("");
 												
 										},
 										error: function(xhr){
