@@ -402,3 +402,13 @@ h2+p { font-size: 17px;  font-weight: 400;}
 
 .infinite-scroll-preloader{margin-top:-20px;margin-bottom:10px;text-align:center;}.infinite-scroll-preloader .preloader{width:34px;height:34px;}
 .page-content{padding-top: 50px;}
+
+img.responsive-fill {
+    width : 100%;
+    height: auto;
+}
+img.responsive-shrink {
+    max-width : 100%;
+    height: auto;
+}
+.marginauto{margin:auto;}

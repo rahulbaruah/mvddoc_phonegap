@@ -6,19 +6,20 @@
   </div>-->
   <div class="page-content logins hide-bars-on-scroll"> 
     <div class="content-block">
-        <!--<div class="row center">
-          <div class="col-auto">
-            <img src="img/pagopa.png" />
-          </div>
-        </div>-->
         <div class="row center">
+          <div class="col-33 marginauto">
+            <img src="img/icon.png" class="responsive-shrink"/>
+          </div>
+        </div>
+        <!--<div class="row center no-gutter">
           <div class="col-100 tablet-33">
             <p>LOGIN</p>
           </div>
-        </div>
+        </div>-->
         <form id="loginForm" action="{{@global.domain}}/oauth/token" method="POST" class="ajax-submit">
             <div class="list-block">
               <ul>
+                <li class="center"><p>LOGIN</p></li>
                 <li class="item-content">
                   <div class="item-inner">
                     <div class="item-input">
@@ -52,7 +53,7 @@
 <input type="hidden" name="client_secret" value="y2uX6hDKIBayf3yX0SK72XPbr6LCFgMQI2CaeuzD">
 <input type="hidden" name="scope" value="">
             <div class="content-block button-connect ">
-				<input type="submit" name="action" value="Login" class="button button-fill button-raised"> <br/>
+				<input id="loginBtn" type="button" name="action" value="Login" class="button button-fill button-raised"> <br/>
             </div>
 </form>
     </div>

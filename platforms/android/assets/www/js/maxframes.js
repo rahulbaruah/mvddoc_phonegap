@@ -229,14 +229,20 @@ $$(document).on('page:init', function (e) {
 			
 								toggleShowPassword('#logpass', '#showpass', '.label-checkbox');
 		
-								$$('#loginForm').on('submit', function(){	//-----LOGIN FORM
+								$$('#loginBtn').on('click', function(e){	//-----LOGIN FORM
 									$$.ajax({
 										cache: false,
 										crossDomain: true,
-										url: $$(this).attr('action'),
+										url: $$('#loginForm').attr('action'),
 										type: 'POST',
-										data: $(this).serialize(),
+										data: $('#loginForm').serialize(),
 										datatype: 'json',
+										/*beforeSend: function() {
+											if(!navigator.onLine){
+												myApp.alert("There is no internet connection.");
+												return false;
+											}
+										},*/
 										success: function(data) {
 												data = JSON.parse(data);
 												var remember = 1;
@@ -258,8 +264,17 @@ $$(document).on('page:init', function (e) {
 										        errorsHtml += '</ul></di>';
 										            
 										        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
-										    } else {
+										        return false;
+										    } else if( xhr.status === 0 ) {
+										    	myApp.alert("There is no internet connection.");
+										    	return false;
+										    } else if( xhr.status === 503 ) {
+										    	myApp.alert("Service unavailable.");
+										    	return false;
+										    }
+										    else {
 										    	myApp.alert("Login credentials dont match our records. Please try again.");
+										    	return false;
 										    }
 										}
 									});
@@ -302,6 +317,9 @@ $$(document).on('page:init', function (e) {
 										        errorsHtml += '</ul></di>';
 										            
 										        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
+										    }  else if( xhr.status === 0 ) {
+										    	myApp.alert("There is no internet connection.");
+										    	return false;
 										    }
 										}
 									});
