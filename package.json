@@ -1,7 +1,7 @@
 {
-    "name": "com.phonegap.helloworld",
+    "name": "com.xcraft.mvddoc",
     "version": "1.0.0",
-    "displayName": "helloworld",
+    "displayName": "mvddoc",
     "cordova": {
         "platforms": [
             "android"

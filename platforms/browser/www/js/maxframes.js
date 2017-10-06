@@ -11,6 +11,8 @@ var tempCompiledTemplate;
 var serverUrl;
 var lastpage;
 
+var reportData;
+
 /*----------------Template7 helpers--------------------*/
 /*Template7.registerHelper('if_compare', function (a, operator, b, options) {
 	var match = false;
@@ -317,6 +319,67 @@ $$(document).on('page:init', function (e) {
 										        errorsHtml += '</ul></di>';
 										            
 										        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
+										    } else if( xhr.status === 503 ) {
+										    	myApp.alert("Service unavailable.");
+										    	return false;
+										    }  else if( xhr.status === 0 ) {
+										    	myApp.alert("There is no internet connection.");
+										    	return false;
+										    }
+										}
+									});
+								});
+			break;
+		case 'view_report':		var myCalendar = myApp.calendar({
+								    input: '#calendar-input'
+								});
+			
+								$$('#getReportSubmit').on('click', function(e){
+									e.preventDefault();
+									myApp.showPreloader();
+									$.ajax({
+										cache: false,
+										crossDomain: true,
+										url: appSettings.domain + "/api/report",
+										type: 'GET',
+										data: $('#getReportForm').serialize(),
+										datatype: 'json',
+										headers: { 'Accept': 'application/json', 'Authorization': "Bearer " + Auth().token},
+										/*beforeSend: function(request) {
+											return request.setRequestHeader("Authorization", "Bearer " + Auth().token);
+										},*/
+										complete: function() {
+											myApp.hidePreloader();
+										},
+										success: function(data) {
+											reportData = data;
+											//data = JSON.parse(data);
+											//myApp.alert(data.referredPatients);
+											mainView.router.load({
+											    url: 'report.html',
+											    context: {
+											      date: data.date,
+											      referredPatients: data.referredPatients
+											    }
+											});
+										},
+										error: function(xhr){
+											if( xhr.status === 422 ) {
+										        //process validation errors here.
+										        var errors = xhr.responseJSON; //this will get the errors response data.
+										        //show them somewhere in the markup
+										        //e.g
+										        var errorsHtml = '<div class="alert alert-danger"><ul>';
+										
+										        $.each( errors, function( key, value ) {
+										            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+										        });
+										        errorsHtml += '</ul></di>';
+										            
+										        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
+										    } else if( xhr.status === 503 ) {
+										    	myApp.alert("Service unavailable.");
+										    	return false;
 										    }  else if( xhr.status === 0 ) {
 										    	myApp.alert("There is no internet connection.");
 										    	return false;

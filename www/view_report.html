@@ -1,0 +1,36 @@
+<div data-page="view_report" class="page">
+<!-----------header navbar----------------->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only"><i class="fa fa-bars"></i></a></div>
+		<div id="navhead" class="center">{{@global.app_name}}</div>
+    </div>
+</div>
+<!-----------//header navbar----------------->
+  <div class="page-content hide-bars-on-scroll">
+      <form id="getReportForm" action="{{@global.domain}}/api/report" method="GET" class="ajax-submit">
+     <div class = "list-block">
+                        <ul>
+                           <li>
+                              <div class="item-content">
+                                 <div class="item-media"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                 <div class="item-inner">
+                                    <div class="item-title label">Select Date</div>
+                                    <div class="item-input">
+                                       <input id="calendar-input" name="date" type="text" placeholder="Select Date">
+                                    </div>
+                                 </div>
+                              </div>
+                           </li>
+                           <li>
+                              <div class="content-block">
+                                  <a id="getReportSubmit" href="#" class="button button-big button-fill button-raised color-blue">Submit</a></div>
+                           </li>
+                        </ul>
+                     </div>
+        </form>
+      <!--<div class="content-block  center">
+          <span class="">Copyright 2016. All Rights Reserved. </span>
+      </div>-->
+  </div>
+</div>
