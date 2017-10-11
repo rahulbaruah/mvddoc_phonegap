@@ -40,7 +40,7 @@ var myApp = new Framework7({
 	reloadPages: true,
     preloadPreviousPage: false,
 	//precompileTemplates: true,
-    //template7Pages: true,
+    template7Pages: true,
     debug: true,
     /*template7Data: {
         // Data for contacts page
