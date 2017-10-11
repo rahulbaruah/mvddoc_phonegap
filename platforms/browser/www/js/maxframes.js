@@ -11,7 +11,14 @@ var tempCompiledTemplate;
 var serverUrl;
 var lastpage;
 
-var reportData;
+var dashboard = {
+				todayPatients:0,
+				todayTotalPatients:0,
+				todayTotalCollection:0,
+				last2daysPatients:0,
+				last2daysTotalPatients:0,
+				last2daysTotalCollection:0
+			};
 
 /*----------------Template7 helpers--------------------*/
 /*Template7.registerHelper('if_compare', function (a, operator, b, options) {
@@ -32,9 +39,13 @@ var myApp = new Framework7({
     material: true,
 	reloadPages: true,
     preloadPreviousPage: false,
-	precompileTemplates: true,
-    template7Pages: true,
+	//precompileTemplates: true,
+    //template7Pages: true,
     debug: true,
+    /*template7Data: {
+        // Data for contacts page
+        'page:home_page': dashboard
+    }*/
 	/* If the page need dynamic data, for example, from a php server using ajax */ 
 	/*preprocess: function (content, url, next) {
 		var main_url = url.split('?')[0];
@@ -112,16 +123,6 @@ function toggleShowPassword(field, control, label){
         }
     });
 }
-
-function currencySymbol(SYM){
-		var currency_rule;
-		if(SYM == 'INR'){
-			currency_rule = 'content: "`";font-family:"RupeeForadian";';
-		} else {
-			currency_rule = 'content: "' + SYM + '";';
-		}		
-		document.styleSheets[0].addRule('.currency:before', currency_rule);		
-	}
 	
 function getParameterByName(name, url) {
     if (!url) {
@@ -212,6 +213,240 @@ function Auth(){
 	}
 }
 
+function todaysReport(){
+	var template = '<div class="content-block">'+
+'         <div class="content-block-title"><h4>Today</h4></div>'+
+'         <div class="content-block  center">'+
+'            <span class="main-report"><strong>{{todayPatients}}</strong></span>'+
+'         </div>'+
+'      </div>'+
+'      <div class="buttonbar row no-gutter">'+
+'         <div class="col-50">'+
+'            <div class="content-block">'+
+'               <div class="content-block-title center">Total Patients</div>'+
+'               <div class="content-block  center">'+
+'                  <strong>{{todayTotalPatients}}</strong>'+
+'               </div>'+
+'            </div>'+
+'         </div>'+
+'         <div class="divider"></div>'+
+'         <div class="col-50">'+
+'            <div class="content-block">'+
+'               <div class="content-block-title center">Total Collection</div>'+
+'               <div class="content-block  center">'+
+'                  <strong><i class="fa fa-inr" aria-hidden="true"></i> {{todayTotalCollection}}</strong>'+
+'               </div>'+
+'            </div>'+
+'         </div>'+
+'      </div>';
+	// compile it with Template7
+	var compiledTemplate = Template7.compile(template);
+	
+	//myApp.showPreloader();
+	$.ajax({
+		cache: false,
+		crossDomain: true,
+		url: appSettings.domain + "/api/report",
+		type: 'GET',
+		data: {},
+		datatype: 'json',
+		headers: { 'Accept': 'application/json', 'Authorization': "Bearer " + Auth().token},
+		complete: function() {
+			//myApp.hidePreloader();
+		},
+		success: function(data) {
+			dashboard.todayPatients = data.todayPatients;
+			dashboard.todayTotalPatients = data.todayTotalPatients;
+			dashboard.todayTotalCollection = data.todayTotalCollection;
+			
+			// Now we may render our compiled template by passing required context				
+			
+			var html = compiledTemplate(dashboard);
+			//myApp.alert(html);
+			
+			$$('#tab1').html(html);
+											
+			//myApp.alert(compiledHtml);
+											
+			//myApp.showTab('#tab1');
+		},
+		error: function(xhr){
+			if( xhr.status === 422 ) {
+		        //process validation errors here.
+		        var errors = xhr.responseJSON; //this will get the errors response data.
+		        //show them somewhere in the markup
+		        //e.g
+		        var errorsHtml = '<div class="alert alert-danger"><ul>';
+								
+		        $.each( errors, function( key, value ) {
+		            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+		        });
+		        errorsHtml += '</ul></di>';
+										            
+		        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
+			} else if( xhr.status === 503 ) {
+			   	myApp.alert("Service unavailable.");
+			   	return false;
+			}  else if( xhr.status === 0 ) {
+		    	myApp.alert("There is no internet connection.");
+		    	return false;
+			}
+		}
+	});
+}
+
+function last2daysReport(){
+	var template = '<div class="content-block">'+
+'         <div class="content-block-title"><h4>Last Two Days</h4></div>'+
+'         <div class="content-block  center">'+
+'            <span class="main-report"><strong>{{last2daysPatients}}</strong></span>'+
+'         </div>'+
+'      </div>'+
+'      <div class="buttonbar row no-gutter">'+
+'         <div class="col-50">'+
+'            <div class="content-block">'+
+'               <div class="content-block-title center">Total Patients</div>'+
+'               <div class="content-block  center">'+
+'                  <strong>{{last2daysTotalPatients}}</strong>'+
+'               </div>'+
+'            </div>'+
+'         </div>'+
+'         <div class="divider"></div>'+
+'         <div class="col-50">'+
+'            <div class="content-block">'+
+'               <div class="content-block-title center">Total Collection</div>'+
+'               <div class="content-block  center">'+
+'                  <strong><i class="fa fa-inr" aria-hidden="true"></i> {{last2daysTotalCollection}}</strong>'+
+'               </div>'+
+'            </div>'+
+'         </div>'+
+'      </div>';
+	// compile it with Template7
+	var compiledTemplate = Template7.compile(template);
+	
+	//myApp.showPreloader();
+	$.ajax({
+		cache: false,
+		crossDomain: true,
+		url: appSettings.domain + "/api/last2report",
+		type: 'GET',
+		data: {},
+		datatype: 'json',
+		headers: { 'Accept': 'application/json', 'Authorization': "Bearer " + Auth().token},
+		complete: function() {
+			//myApp.hidePreloader();
+		},
+		success: function(data) {
+			dashboard.last2daysPatients = data.last2daysPatients;
+			dashboard.last2daysTotalPatients = data.last2daysTotalPatients;
+			dashboard.last2daysTotalCollection = data.last2daysTotalCollection;
+			
+			// Now we may render our compiled template by passing required context				
+			
+			var html = compiledTemplate(dashboard);
+			//myApp.alert(html);
+			
+			$$('#tab2').html(html);
+											
+			//myApp.alert(compiledHtml);
+											
+			//myApp.showTab('#tab1');
+		},
+		error: function(xhr){
+			if( xhr.status === 422 ) {
+		        //process validation errors here.
+		        var errors = xhr.responseJSON; //this will get the errors response data.
+		        //show them somewhere in the markup
+		        //e.g
+		        var errorsHtml = '<div class="alert alert-danger"><ul>';
+								
+		        $.each( errors, function( key, value ) {
+		            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+		        });
+		        errorsHtml += '</ul></di>';
+										            
+		        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
+			} else if( xhr.status === 503 ) {
+			   	myApp.alert("Service unavailable.");
+			   	return false;
+			}  else if( xhr.status === 0 ) {
+		    	myApp.alert("There is no internet connection.");
+		    	return false;
+			}
+		}
+	});
+}
+
+function filterReport(patientsReport, totalPatientsReport, totalCollection){
+	var template = '<div class="content-block">'+
+'         <div class="content-block-title"><h4>Patients</h4></div>'+
+'         <div class="content-block  center">'+
+'            <span class="main-report"><strong>{{patientsReport}}</strong></span>'+
+'         </div>'+
+'      </div>'+
+'      <div class="buttonbar row no-gutter">'+
+'         <div class="col-50">'+
+'            <div class="content-block">'+
+'               <div class="content-block-title center">Total Patients</div>'+
+'               <div class="content-block  center">'+
+'                  <strong>{{totalPatientsReport}}</strong>'+
+'               </div>'+
+'            </div>'+
+'         </div>'+
+'         <div class="divider"></div>'+
+'         <div class="col-50">'+
+'            <div class="content-block">'+
+'               <div class="content-block-title center">Total Collection</div>'+
+'               <div class="content-block  center">'+
+'                  <strong><i class="fa fa-inr" aria-hidden="true"></i> {{totalCollection}}</strong>'+
+'               </div>'+
+'            </div>'+
+'         </div>'+
+'      </div>';
+	// compile it with Template7
+	var compiledTemplate = Template7.compile(template);
+	
+	var html = compiledTemplate({
+		'patientsReport' : patientsReport,
+		'totalPatientsReport' : totalPatientsReport,
+		'totalCollection' : totalCollection
+	});
+	//myApp.alert(html);
+			
+	$$('#filterBlock').html(html);
+}
+
+function showProfile(name, email){
+	
+var template = '<div class="list-block">'+
+'                  <ul>'+
+'                    <li class="item-content">'+
+'                        <div class="item-media"><label for="start_date"><i class="fa fa-user" aria-hidden="true"></i></label></div>'+
+'                      <div class="item-inner">'+
+'                        <div class="item-title">{{name}}</div>'+
+'                      </div>'+
+'                    </li>'+
+'                    <li class="item-content">'+
+'                        <div class="item-media"><label for="start_date"><i class="fa fa-envelope" aria-hidden="true"></i></label></div>'+
+'                      <div class="item-inner">'+
+'                        <div class="item-title">{{email}}</div>'+
+'                      </div>'+
+'                    </li>'+
+'                  </ul>'+
+'                </div>';
+
+	var compiledTemplate = Template7.compile(template);
+	
+	var html = compiledTemplate({
+		'name' : name,
+		'email' : email
+	});
+	//myApp.alert(html);
+			
+	$$('#profile-inner').html(html);	
+
+}
+
 /*-----------------------//custom functions---------------------------------*/
 
 $$(document).on('click', '#logout_btn', function(event){
@@ -282,7 +517,61 @@ $$(document).on('page:init', function (e) {
 									});
 								});
 			break;
-		case 'home_page':	$$('#referPatientSubmit').on('click', function(e){
+		case 'home_page':	var startDateCalendar = myApp.calendar({
+								    input: '#start_date'
+								});
+							
+							var endDateCalendar = myApp.calendar({
+								    input: '#end_date'
+								});
+								
+							$$('#filterReportSubmit').on('click', function(e){
+									e.preventDefault();
+									myApp.showPreloader();
+									$.ajax({
+										cache: false,
+										crossDomain: true,
+										url: appSettings.domain + "/api/filterreport",
+										type: 'GET',
+										data: {
+											'start_date':$('#start_date').val(),
+											'end_date':$('#end_date').val()
+										},
+										datatype: 'json',
+										headers: { 'Accept': 'application/json', 'Authorization': "Bearer " + Auth().token},
+										complete: function() {
+											myApp.hidePreloader();
+										},
+										success: function(data) {
+											//data = JSON.parse(data);
+											filterReport(data.patientsReport, data.totalPatientsReport, data.totalCollection)	
+										},
+										error: function(xhr){
+											if( xhr.status === 422 ) {
+										        //process validation errors here.
+										        var errors = xhr.responseJSON; //this will get the errors response data.
+										        //show them somewhere in the markup
+										        //e.g
+										        var errorsHtml = '<div class="alert alert-danger"><ul>';
+										
+										        $.each( errors, function( key, value ) {
+										            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+										        });
+										        errorsHtml += '</ul></di>';
+										            
+										        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
+										    } else if( xhr.status === 503 ) {
+										    	myApp.alert("Service unavailable.");
+										    	return false;
+										    }  else if( xhr.status === 0 ) {
+										    	myApp.alert("There is no internet connection.");
+										    	return false;
+										    }
+										}
+									});
+								});
+			
+							$$('#referPatientSubmit').on('click', function(e){
 									e.preventDefault();
 									myApp.showPreloader();
 									$.ajax({
@@ -302,7 +591,7 @@ $$(document).on('page:init', function (e) {
 										success: function(data) {
 											//data = JSON.parse(data);
 											myApp.alert("Patient referred successfully.");
-											$('#referPatientForm').find("input[type=text], select").val("");
+											$('#referPatientForm').find("input[type=text], textarea").val("");
 												
 										},
 										error: function(xhr){
@@ -329,8 +618,59 @@ $$(document).on('page:init', function (e) {
 										}
 									});
 								});
+							
+							$$('#tab1').on('tab:show', function () {
+							    todaysReport();
+							});
+							
+							$$('#tab2').on('tab:show', function () {
+							    last2daysReport();
+							});
+							
+							todaysReport();
 			break;
-		case 'view_report':		var myCalendar = myApp.calendar({
+		case 'profile':		myApp.showPreloader();
+		
+							$.ajax({
+										cache: false,
+										crossDomain: true,
+										url: appSettings.domain + "/api/doctorprofile",
+										type: 'GET',
+										data: {},
+										datatype: 'json',
+										headers: { 'Accept': 'application/json', 'Authorization': "Bearer " + Auth().token},
+										complete: function() {
+											myApp.hidePreloader();
+										},
+										success: function(data) {
+											showProfile(data.name, data.email);
+										},
+										error: function(xhr){
+											if( xhr.status === 422 ) {
+										        //process validation errors here.
+										        var errors = xhr.responseJSON; //this will get the errors response data.
+										        //show them somewhere in the markup
+										        //e.g
+										        var errorsHtml = '<div class="alert alert-danger"><ul>';
+										
+										        $.each( errors, function( key, value ) {
+										            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+										        });
+										        errorsHtml += '</ul></di>';
+										            
+										        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
+										    } else if( xhr.status === 503 ) {
+										    	myApp.alert("Service unavailable.");
+										    	return false;
+										    }  else if( xhr.status === 0 ) {
+										    	myApp.alert("There is no internet connection.");
+										    	return false;
+										    }
+										}
+									});
+				
+			break;
+		/*case 'view_report':	var myCalendar = myApp.calendar({
 								    input: '#calendar-input'
 								});
 			
@@ -345,9 +685,6 @@ $$(document).on('page:init', function (e) {
 										data: $('#getReportForm').serialize(),
 										datatype: 'json',
 										headers: { 'Accept': 'application/json', 'Authorization': "Bearer " + Auth().token},
-										/*beforeSend: function(request) {
-											return request.setRequestHeader("Authorization", "Bearer " + Auth().token);
-										},*/
 										complete: function() {
 											myApp.hidePreloader();
 										},
@@ -387,7 +724,7 @@ $$(document).on('page:init', function (e) {
 										}
 									});
 								});
-			break;
+			break;*/
 		default: 
 			break;
 		}

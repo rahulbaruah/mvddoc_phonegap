@@ -1,6 +1,4 @@
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
-@font-face{font-family:'RupeeForadian' ;src:url('../fonts/Rupee_Foradian.ttf')}
-
 html {font-family: sans-serif; /* 1 */-ms-text-size-adjust: 100%; /* 2 */-webkit-text-size-adjust: 100%; /* 2 */}
 body {margin: 0;}
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {display: block;}
@@ -109,7 +107,7 @@ body {
 }
 .navbar .center, .subnavbar .center {font-size: 16px; font-weight: 300; text-transform: uppercase   }
 .navbar.header{ background: transparent}
-.list-block .item-title { text-transform: uppercase}
+/*.list-block .item-title { text-transform: uppercase}*/
 h5{ font-weight: 200; line-height: 0px; margin: 0}
 hr{ clear: both; border: 0; border-top: 1px solid #eeeeee; width: 100%;}
 .text-right{ text-align: right}
@@ -217,7 +215,8 @@ hr{ clear: both; border: 0; border-top: 1px solid #eeeeee; width: 100%;}
 .loginsimag.profi{ height: 100px; padding:20px 0}
 .loginsimag.profi img{width: 100px; border-radius: 50%}
 .page-content.tab { padding-top: 0}
-.tabbar a.tab-link{  width:90%;  display: inline-block;  height: 33px; border-radius: 40px;  margin: 0 2.5%;  background: rgba(0, 0, 0, 0.1); font-size: 12px;}
+.toolbar.top{background-color:#000!important}
+/*.tabbar a.tab-link{  width:90%;  display: inline-block;  height: 33px; border-radius: 40px;  margin: 0 2.5%;  background: rgba(0, 0, 0, 0.1); font-size: 12px;}*/
 .userprofile.large { padding: 100px 0 20px 0;  height: 70px;}
 .userprofile.large .item-title { margin-top: 15px;}
 .tabbar a.tab-link.active{ background:none}
@@ -412,3 +411,17 @@ img.responsive-shrink {
     height: auto;
 }
 .marginauto{margin:auto;}
+
+.divider{
+    position:absolute;
+    left:50%;
+    top:10%;
+    bottom:10%;
+    border-left:1px solid #9e9e9e;
+}
+.buttonbar{border-top: solid 1px #9e9e9e}
+.buttonbar .content-block{margin: 10px 0}
+.buttonbar .content-block-title{margin: 0}
+.report-filter .item-content{margin: 0;background-color:#F5F5F5}
+.report-filter .list-block{margin: 10px 0}
+.main-report{color: #E91E63}

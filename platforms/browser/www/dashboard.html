@@ -1,21 +1,90 @@
-<div data-page="home_page" class="page">
+<div data-page="home_page" class="page toolbar-fixed navbar-fixed">
 <!-----------header navbar----------------->
 <div class="navbar">
     <div class="navbar-inner">
         <div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only"><i class="fa fa-bars"></i></a></div>
-		<div id="navhead" class="center">{{@global.app_name}}</div>
+		<div id="navhead" class="center">Welcome Doctor</div>
+		<div class="right"><a href="tel:" class="link icon-only external"><i class="fa fa-phone"></i></a></div>
+    </div>
+</div>
+<div class="toolbar tabbar top">
+    <div class="toolbar-inner">
+        <a href="#tab1" class="show-tab-1 tab-link active">
+            <i class="fa fa-calendar-check-o fa-lg"></i>
+        </a>
+        <a href="#tab2" class="tab-link">
+            <i class="fa fa-calendar-o fa-lg"></i>
+        </a>
+        <a href="#tab3" class="tab-link">
+            <i class="fa fa-filter fa-lg"></i>
+        </a>
+        <a href="#tab4" class="tab-link">
+            <i class="fa fa-percent fa-lg"></i>
+        </a>
     </div>
 </div>
 <!-----------//header navbar----------------->
   <div class="page-content hide-bars-on-scroll">
-      <form id="referPatientForm" action="{{@global.domain}}/api/referpatient" method="POST" class="ajax-submit">
+   <div class="tabs">
+    <!-- Tab 1, active by default -->
+    <div id="tab1" class="tab active">
+    </div>
+    <!-- Tab 2 -->
+    <div id="tab2" class="tab">
+    </div>
+    <!-- Tab 3 -->
+    <div id="tab3" class="tab">
+      <div class="content-block report-filter">
+        <div class="row">
+            <div class="col-50">
+                <div class="list-block">
+                  <ul>
+                    <li class=""><p>START DATE</p></li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media"><label for="start_date"><i class="fa fa-calendar" aria-hidden="true"></i></label></div>
+                        <div class="item-inner">
+                          <div class="item-input">
+                              <input id="start_date" name="start_date" type="text">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+            <div class="col-50">
+                <div class="list-block">
+                  <ul>
+                    <li class=""><p>END DATE</p></li>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-media"><label for="end_date"><i class="fa fa-calendar" aria-hidden="true"></i></label></div>
+                        <div class="item-inner">
+                          <div class="item-input">
+                              <input id="end_date" name="end_date" type="text">
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+        <a id="filterReportSubmit" href="#" class="button button-big button-fill button-raised color-gray"><i class="fa fa-search fa-2x" aria-hidden="true"></i></a>
+      </div>
+      <div id="filterBlock" class="content-block"></div>
+    </div>
+    <div id="tab4" class="tab">
+      <div class="content-block">
+        <form id="referPatientForm" action="{{@global.domain}}/api/referpatient" method="POST" class="ajax-submit">
      <div class = "list-block">
                         <ul>
                            <li>
                               <div class="item-content">
                                  <div class="item-media"><i class="fa fa-user" aria-hidden="true"></i></div>
                                  <div class="item-inner">
-                                    <div class="item-title label">Patient Name</div>
+                                    <!--<div class="item-title label">Patient Name</div>-->
                                     <div class="item-input">
                                        <input name="name" type="text" placeholder="Enter patient name">
                                     </div>
@@ -26,7 +95,7 @@
                               <div class = "item-content">
                                  <div class="item-media"><i class="fa fa-phone" aria-hidden="true"></i></div>
                                  <div class="item-inner">
-                                    <div class="item-title label">Phone</div>
+                                    <!--<div class="item-title label">Phone</div>-->
                                     <div class="item-input">
                                        <input name="phone" type="text" placeholder="Enter patient phone number">
                                     </div>
@@ -35,29 +104,25 @@
                            </li>
                            <li>
                               <div class="item-content">
-                                 <div class="item-media"><i class="fa fa-money" aria-hidden="true"></i></div>
+                                 <div class="item-media"><i class="fa fa-comment-o" aria-hidden="true"></i></div>
                                  <div class="item-inner">
-                                    <div class="item-title label">Discount</div>
+                                    <!--<div class="item-title label">Description</div>-->
                                     <div class="item-input">
-                                       <select name="discount" placeholder="Select Discount">
-                                            <option value="">None</option>
-                                            <option value="10">10%</option>
-                                            <option value="20">20%</option>
-                                            <option value="25">25%</option>
-                                            <option value="30">30%</option>
-                                            <option value="40">40%</option>
-                                       </select>
+                                       <textarea name="description" class="resizable" placeholder="Description"></textarea>
                                     </div>
                                  </div>
                               </div>
                            </li>
                            <li>
                               <div class="content-block">
-                                  <a id="referPatientSubmit" href="#" class="button button-big button-fill button-raised color-blue">Submit</a></div>
+                                  <a id="referPatientSubmit" href="#" class="button button-big button-fill button-raised color-red">Submit</a></div>
                            </li>
                         </ul>
                      </div>
         </form>
+      </div>
+    </div>
+   </div>
       <!--<div class="content-block  center">
           <span class="">Copyright 2016. All Rights Reserved. </span>
       </div>-->
