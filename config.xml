@@ -8,6 +8,7 @@
         Xcraftonline Pvt Ltd
     </author>
     <content src="index.html" />
+    <preference name="permissions" value="none" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     <icon src="www/img/icon.png" />
