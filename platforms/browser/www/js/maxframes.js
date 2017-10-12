@@ -109,11 +109,11 @@ $$('.panel-left, .panel-right').on('close', function () {
 
 /*-----------------------custom functions---------------------------------*/
 function toggleShowPassword(field, control, label){
-	var control = $(control);
-    var field = $(field);
-    var label = $(label);
+	var control = $$(control);
+    var field = $$(field);
+    var label = $$(label);
     
-    label.bind('click', function () {
+    label.on('click', function () {
         if (control.is(':checked')) {
             //field.attr('type', 'text');
             field.attr('type', 'password'); //Inverted for cordova
@@ -534,8 +534,8 @@ $$(document).on('page:init', function (e) {
 										url: appSettings.domain + "/api/filterreport",
 										type: 'GET',
 										data: {
-											'start_date':$('#start_date').val(),
-											'end_date':$('#end_date').val()
+											'start_date':$$('#start_date').val(),
+											'end_date':$$('#end_date').val()
 										},
 										datatype: 'json',
 										headers: { 'Accept': 'application/json', 'Authorization': "Bearer " + Auth().token},
@@ -591,7 +591,7 @@ $$(document).on('page:init', function (e) {
 										success: function(data) {
 											//data = JSON.parse(data);
 											myApp.alert("Patient referred successfully.");
-											$('#referPatientForm').find("input[type=text], textarea").val("");
+											$$('#referPatientForm').find("input[type=text], textarea").val("");
 												
 										},
 										error: function(xhr){
@@ -670,61 +670,6 @@ $$(document).on('page:init', function (e) {
 									});
 				
 			break;
-		/*case 'view_report':	var myCalendar = myApp.calendar({
-								    input: '#calendar-input'
-								});
-			
-								$$('#getReportSubmit').on('click', function(e){
-									e.preventDefault();
-									myApp.showPreloader();
-									$.ajax({
-										cache: false,
-										crossDomain: true,
-										url: appSettings.domain + "/api/report",
-										type: 'GET',
-										data: $('#getReportForm').serialize(),
-										datatype: 'json',
-										headers: { 'Accept': 'application/json', 'Authorization': "Bearer " + Auth().token},
-										complete: function() {
-											myApp.hidePreloader();
-										},
-										success: function(data) {
-											reportData = data;
-											//data = JSON.parse(data);
-											//myApp.alert(data.referredPatients);
-											mainView.router.load({
-											    url: 'report.html',
-											    context: {
-											      date: data.date,
-											      referredPatients: data.referredPatients
-											    }
-											});
-										},
-										error: function(xhr){
-											if( xhr.status === 422 ) {
-										        //process validation errors here.
-										        var errors = xhr.responseJSON; //this will get the errors response data.
-										        //show them somewhere in the markup
-										        //e.g
-										        var errorsHtml = '<div class="alert alert-danger"><ul>';
-										
-										        $.each( errors, function( key, value ) {
-										            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
-										        });
-										        errorsHtml += '</ul></di>';
-										            
-										        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
-										    } else if( xhr.status === 503 ) {
-										    	myApp.alert("Service unavailable.");
-										    	return false;
-										    }  else if( xhr.status === 0 ) {
-										    	myApp.alert("There is no internet connection.");
-										    	return false;
-										    }
-										}
-									});
-								});
-			break;*/
 		default: 
 			break;
 		}
