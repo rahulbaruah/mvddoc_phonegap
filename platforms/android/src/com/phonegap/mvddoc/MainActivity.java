@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.xcraft.mvddoc;
+package com.phonegap.mvddoc;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
