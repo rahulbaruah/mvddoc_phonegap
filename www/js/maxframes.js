@@ -1,6 +1,6 @@
 "use strict";
 var appSettings = {
-		domain: 'https://doctor-app-2-anupamfear.c9users.io',
+		domain: 'http://mvdapp.info',
 		app_name: 'Mvddoc',
 		auth: 0
 	};
