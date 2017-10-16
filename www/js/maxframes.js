@@ -1,6 +1,6 @@
 "use strict";
 var appSettings = {
-		domain: 'http://mvdapp.info',
+		domain: 'https://www.mvdapp.info', //https://doctor-app-2-anupamfear.c9users.io
 		app_name: 'Mvddoc',
 		auth: 0
 	};
@@ -467,10 +467,11 @@ $$(document).on('page:init', function (e) {
 								toggleShowPassword('#logpass', '#showpass', '.label-checkbox');
 		
 								$$('#loginBtn').on('click', function(e){	//-----LOGIN FORM
+									e.preventDefault();
 									$$.ajax({
 										cache: false,
 										crossDomain: true,
-										url: $$('#loginForm').attr('action'),
+										url: appSettings.domain + "/oauth/token",
 										type: 'POST',
 										data: $('#loginForm').serialize(),
 										datatype: 'json',
@@ -510,7 +511,7 @@ $$(document).on('page:init', function (e) {
 										    	return false;
 										    }
 										    else {
-										    	myApp.alert("Login credentials dont match our records. Please try again.");
+										    	myApp.alert(xhr.status + '' + xhr.responseText);
 										    	return false;
 										    }
 										}
