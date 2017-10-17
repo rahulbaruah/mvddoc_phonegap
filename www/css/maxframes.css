@@ -125,7 +125,7 @@ hr{ clear: both; border: 0; border-top: 1px solid #eeeeee; width: 100%;}
 /*-------- theme1 lading screen Intro -------*/
 /*--------------------------------------------*/
 .landingpage{ background: #5c6693}
-.buttonbar{ position: fixed; bottom: 0; width: 100%; left: 0; z-index: 1}
+.buttonbar{ position: relative; /*bottom: 0; */width: 100%; /*left: 0; */z-index: 1}
 .buttonbar .button{left: 0; line-height: 60px; padding: 0; vertical-align: middle; text-align: center; height: 60px; border-radius: 0}
 .logo { margin: 0 auto; width: 80%; max-width: 400px; display: block; }
 .logo img{ max-width: 100%;}
@@ -425,3 +425,9 @@ img.responsive-shrink {
 .report-filter .item-content{margin: 0;background-color:#F5F5F5}
 .report-filter .list-block{margin: 10px 0}
 .main-report{color: #E91E63;font-size: 5em;}
+.data-patient-list .item-title{color:#fff!important;}
+.data-patient-list .item-after{color:#000!important;}
+.data-all{background-color: #FF9800}
+.data-critical{background-color: #E91E63}
+.data-semicritical{background-color: #FFEB3B}
+.data-normal{background-color: #009688}

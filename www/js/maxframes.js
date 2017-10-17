@@ -245,6 +245,45 @@ function Auth(){
 	}
 }
 
+
+var patient_data_list = '<div class="data-patient-list list-block inset">'+
+'  <ul>'+
+'    <li>'+
+'      <a href="#" class="item-link item-content data-all">'+
+'        <div class="item-inner">'+
+'          <div class="item-title">All</div>'+
+'          <div class="item-after">0</div>'+
+'        </div>'+
+'      </a>'+
+'    </li>'+
+'    <li>'+
+'      <a href="#" class="item-link item-content data-critical">'+
+'        <div class="item-inner">'+
+'          <div class="item-title">Critical</div>'+
+'          <div class="item-after">0</div>'+
+'        </div>'+
+'      </a>'+
+'    </li>'+
+'    <li>'+
+'      <a href="#" class="item-link item-content data-semicritical">'+
+'        <div class="item-inner">'+
+'          <div class="item-title">Semi-Critical</div>'+
+'          <div class="item-after">0</div>'+
+'        </div>'+
+'      </a>'+
+'    </li>'+
+'    <li>'+
+'      <a href="#" class="item-link item-content data-normal">'+
+'        <div class="item-inner">'+
+'          <div class="item-title">Normal</div>'+
+'          <div class="item-after">0</div>'+
+'        </div>'+
+'      </a>'+
+'    </li>'+
+'  </ul>'+
+'</div>';
+
+
 function todaysReport(){
 	var template = '<div class="content-block">'+
 '         <div class="content-block-title"><h4>Today</h4></div>'+
@@ -270,7 +309,7 @@ function todaysReport(){
 '               </div>'+
 '            </div>'+
 '         </div>'+
-'      </div>';
+'      </div>' + patient_data_list;
 	// compile it with Template7
 	var compiledTemplate = Template7.compile(template);
 	
@@ -303,26 +342,7 @@ function todaysReport(){
 			//myApp.showTab('#tab1');
 		},
 		error: function(xhr){
-			if( xhr.status === 422 ) {
-		        //process validation errors here.
-		        var errors = xhr.responseJSON; //this will get the errors response data.
-		        //show them somewhere in the markup
-		        //e.g
-		        var errorsHtml = '<div class="alert alert-danger"><ul>';
-								
-		        $.each( errors, function( key, value ) {
-		            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
-		        });
-		        errorsHtml += '</ul></di>';
-										            
-		        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
-			} else if( xhr.status === 503 ) {
-			   	myApp.alert("Service unavailable.");
-			   	return false;
-			}  else if( xhr.status === 0 ) {
-		    	myApp.alert("There is no internet connection.");
-		    	return false;
-			}
+			errorsDisplay(xhr);
 		}
 	});
 }
@@ -352,7 +372,7 @@ function last2daysReport(){
 '               </div>'+
 '            </div>'+
 '         </div>'+
-'      </div>';
+'      </div>' + patient_data_list;
 	// compile it with Template7
 	var compiledTemplate = Template7.compile(template);
 	
@@ -385,26 +405,7 @@ function last2daysReport(){
 			//myApp.showTab('#tab1');
 		},
 		error: function(xhr){
-			if( xhr.status === 422 ) {
-		        //process validation errors here.
-		        var errors = xhr.responseJSON; //this will get the errors response data.
-		        //show them somewhere in the markup
-		        //e.g
-		        var errorsHtml = '<div class="alert alert-danger"><ul>';
-								
-		        $.each( errors, function( key, value ) {
-		            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
-		        });
-		        errorsHtml += '</ul></di>';
-										            
-		        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
-			} else if( xhr.status === 503 ) {
-			   	myApp.alert("Service unavailable.");
-			   	return false;
-			}  else if( xhr.status === 0 ) {
-		    	myApp.alert("There is no internet connection.");
-		    	return false;
-			}
+			errorsDisplay(xhr)
 		}
 	});
 }
@@ -434,7 +435,7 @@ function filterReport(patientsReport, totalPatientsReport, totalCollection){
 '               </div>'+
 '            </div>'+
 '         </div>'+
-'      </div>';
+'      </div>' + patient_data_list;
 	// compile it with Template7
 	var compiledTemplate = Template7.compile(template);
 	
