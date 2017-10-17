@@ -2,6 +2,8 @@
 var appSettings = {
 		domain: 'https://www.mvdapp.info', //https://doctor-app-2-anupamfear.c9users.io
 		app_name: 'Mvddoc',
+		client_id: '4',
+		client_secret: 'L3GrXagSFe08rQuckEjeJAD4YCQh3PHiK3AXcvtd',
 		auth: 0
 	};
 
@@ -108,6 +110,36 @@ $$('.panel-left, .panel-right').on('close', function () {
 });
 
 /*-----------------------custom functions---------------------------------*/
+function errorsDisplay(xhr){
+	if( xhr.status === 422 ) {
+										        //process validation errors here.
+										        var errors = xhr.responseJSON; //this will get the errors response data.
+										        //show them somewhere in the markup
+										        //e.g
+										        var errorsHtml = '<div class="alert alert-danger"><ul>';
+										
+										        $.each( errors, function( key, value ) {
+										            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+										        });
+										        errorsHtml += '</ul></di>';
+										            
+										        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
+										        return false;
+										    } else if( xhr.status === 0 ) {
+										    	myApp.alert("There is no internet connection.");
+										    	return false;
+										    } else if( xhr.status === 503 ) {
+										    	myApp.alert("Service unavailable.");
+										    	return false;
+										    }
+										    else {
+										    	var dataXhr=xhr.responseText;
+												var jsonResponse = JSON.parse(dataXhr);
+										    	myApp.alert(jsonResponse["message"]);
+										    	return false;
+										    }	
+}
+
 function toggleShowPassword(field, control, label){
 	var control = $$(control);
     var field = $$(field);
@@ -217,7 +249,7 @@ function todaysReport(){
 	var template = '<div class="content-block">'+
 '         <div class="content-block-title"><h4>Today</h4></div>'+
 '         <div class="content-block  center">'+
-'            <span class="main-report"><strong>{{todayPatients}}</strong></span>'+
+'            <span class="main-report">{{todayPatients}}</span>'+
 '         </div>'+
 '      </div>'+
 '      <div class="buttonbar row no-gutter">'+
@@ -299,7 +331,7 @@ function last2daysReport(){
 	var template = '<div class="content-block">'+
 '         <div class="content-block-title"><h4>Last Two Days</h4></div>'+
 '         <div class="content-block  center">'+
-'            <span class="main-report"><strong>{{last2daysPatients}}</strong></span>'+
+'            <span class="main-report">{{last2daysPatients}}</span>'+
 '         </div>'+
 '      </div>'+
 '      <div class="buttonbar row no-gutter">'+
@@ -381,7 +413,7 @@ function filterReport(patientsReport, totalPatientsReport, totalCollection){
 	var template = '<div class="content-block">'+
 '         <div class="content-block-title"><h4>Patients</h4></div>'+
 '         <div class="content-block  center">'+
-'            <span class="main-report"><strong>{{patientsReport}}</strong></span>'+
+'            <span class="main-report">{{patientsReport}}</span>'+
 '         </div>'+
 '      </div>'+
 '      <div class="buttonbar row no-gutter">'+
@@ -489,31 +521,7 @@ $$(document).on('page:init', function (e) {
 										},
 										error: function(xhr){
 											//console.log(xhr.reponseText);
-											if( xhr.status === 422 ) {
-										        //process validation errors here.
-										        var errors = xhr.responseJSON; //this will get the errors response data.
-										        //show them somewhere in the markup
-										        //e.g
-										        var errorsHtml = '<div class="alert alert-danger"><ul>';
-										
-										        $.each( errors, function( key, value ) {
-										            errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
-										        });
-										        errorsHtml += '</ul></di>';
-										            
-										        myApp.alert( errorsHtml ); //appending to a <div id="form-errors"></div> inside form
-										        return false;
-										    } else if( xhr.status === 0 ) {
-										    	myApp.alert("There is no internet connection.");
-										    	return false;
-										    } else if( xhr.status === 503 ) {
-										    	myApp.alert("Service unavailable.");
-										    	return false;
-										    }
-										    else {
-										    	myApp.alert(xhr.status + '' + xhr.responseText);
-										    	return false;
-										    }
+											errorsDisplay(xhr);
 										}
 									});
 								});
@@ -567,6 +575,11 @@ $$(document).on('page:init', function (e) {
 										    }  else if( xhr.status === 0 ) {
 										    	myApp.alert("There is no internet connection.");
 										    	return false;
+										    } else {
+										    	var dataXhr=xhr.responseText;
+												var jsonResponse = JSON.parse(dataXhr);
+										    	myApp.alert(jsonResponse["message"]);
+										    	return false;
 										    }
 										}
 									});
@@ -614,6 +627,11 @@ $$(document).on('page:init', function (e) {
 										    	return false;
 										    }  else if( xhr.status === 0 ) {
 										    	myApp.alert("There is no internet connection.");
+										    	return false;
+										    } else {
+										    	var dataXhr=xhr.responseText;
+												var jsonResponse = JSON.parse(dataXhr);
+										    	myApp.alert(jsonResponse["message"]);
 										    	return false;
 										    }
 										}
@@ -665,6 +683,11 @@ $$(document).on('page:init', function (e) {
 										    	return false;
 										    }  else if( xhr.status === 0 ) {
 										    	myApp.alert("There is no internet connection.");
+										    	return false;
+										    } else {
+										    	var dataXhr=xhr.responseText;
+												var jsonResponse = JSON.parse(dataXhr);
+										    	myApp.alert(jsonResponse["message"]);
 										    	return false;
 										    }
 										}
