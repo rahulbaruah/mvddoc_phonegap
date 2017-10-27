@@ -252,7 +252,7 @@ var patient_data_list = '<div class="data-patient-list list-block inset">'+
 '      <a href="#" class="item-link item-content data-all">'+
 '        <div class="item-inner">'+
 '          <div class="item-title">All</div>'+
-'          <div class="item-after">0</div>'+
+'          <div class="item-after">8</div>'+
 '        </div>'+
 '      </a>'+
 '    </li>'+
@@ -268,7 +268,7 @@ var patient_data_list = '<div class="data-patient-list list-block inset">'+
 '      <a href="#" class="item-link item-content data-semicritical">'+
 '        <div class="item-inner">'+
 '          <div class="item-title">Semi-Critical</div>'+
-'          <div class="item-after">0</div>'+
+'          <div class="item-after">3</div>'+
 '        </div>'+
 '      </a>'+
 '    </li>'+
@@ -276,7 +276,7 @@ var patient_data_list = '<div class="data-patient-list list-block inset">'+
 '      <a href="#" class="item-link item-content data-normal">'+
 '        <div class="item-inner">'+
 '          <div class="item-title">Normal</div>'+
-'          <div class="item-after">0</div>'+
+'          <div class="item-after">5</div>'+
 '        </div>'+
 '      </a>'+
 '    </li>'+
